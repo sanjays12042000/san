@@ -1,0 +1,23 @@
+h1{
+    color: blue;
+}
+
+.sanjay{
+    color: red;
+}
+#san{
+    color: green;
+}
+
+h4[element="raja"]{
+    color: purple;
+    font-weight: 800;
+    font-style: italic;
+    text-align: center;
+    text-decoration: underline;
+    animation: ani 4s infinite;
+}
+
+p{
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
