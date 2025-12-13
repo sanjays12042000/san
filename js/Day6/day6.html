@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!--FireBase SDK-->
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 </head>
 <body>
     <div class="2xl:container mx-auto">
@@ -36,24 +41,25 @@
     </div>
 
     <script>
-      var submit = document.getElementById("submit");
+      var form = document.getElementById("submit");
       var email = document.getElementById("email");
       var pass = document.getElementById("pass");
 
-      submit.addEventListener("submit", (e)=>{
-          e.preventDefault();
-          advancevalidation(email.value,pass.value);
-      })
+      var EmailError = document.getElementById("EmailError");
+      var PassError = document.getElementById("PassError");
 
-      var advancevalidation = (email,pass)=>{
-         var emailRegex = /^\S+@\S+\.\S+$/;
-         var passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+       const advancevalidation = (email,pass)=>{
+         const emailRegex = /^\S+@\S+\.\S+$/;
+         const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+         
+         var isValid = true;
 
          if (email.match(emailRegex)) {
           console.log("valid email");
            EmailError.textContent = " ";
          } else{
           EmailError.textContent = "Invalid email";
+          isValid = false;
          }
 
          if (pass.match(passRegex)) {
@@ -61,8 +67,76 @@
              PassError.textContent = " ";         
          } else {
            PassError.textContent = "Invalid password";
+            isValid = false;
          }
+          return isValid;
       };
+
+
+
+      form.addEventListener("submit", (e)=>{
+          e.preventDefault();
+         const valid = advancevalidation(email.value, pass.value);
+          if (valid){
+          saveData(email.value, pass.value);
+         console.log("Data saved successfully");
+          }else {
+           console.log("Validation failed. Data not saved.");
+          }
+      });
+
+      const saveData = (email,pass) => {
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyAU30xrA-dHOaTRTwUtRR6HM_QoEnmAq0U",
+          authDomain: "jsdatabase-1700d.firebaseapp.com",
+          databaseURL: "https://jsdatabase-1700d-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "jsdatabase-1700d",
+          storageBucket: "jsdatabase-1700d.firebasestorage.app",
+          messagingSenderId: "860181652512",
+          appId: "1:860181652512:web:dca3430f41d5178224c845"
+      };
+
+        firebase.initializeApp(firebaseConfig);
+
+      const db = firebase.database().ref("ReqForm");
+
+        db.push({
+          email: email,
+          password: pass,
+      });
+      }
+
+
+    email.addEventListener("input", (e)=>{
+        const emailRegex = /^\S+@\S+\.\S+$/;
+
+        if (e.target.value == "") {
+          EmailError.textContent = "Email is required";
+        } else if (!e.target.value.match(emailRegex)) {
+           EmailError.textContent = "Invalid email";
+         } else{
+          EmailError.textContent = "";
+         }
+      });
+
+      pass.addEventListener("input", (e)=>{
+         const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+         const charRegex = /[#?!@$%^&*-]/;
+
+         if (e.target.value == "") {
+          PassError.textContent = "Password is required";
+         } else if (!e.target.value.match(charRegex)) {
+           PassError.textContent = "Password must contain at least one special character";
+         } else if (!e.target.value.match(passRegex)) {
+           PassError.textContent = "Invalid password";
+         }else {
+           PassError.textContent = "";
+         }
+      });
+
+
+     
     </script>
 
 </body>
