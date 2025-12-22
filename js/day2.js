@@ -13,7 +13,7 @@ var obj = {
    Fees:[4999,"offers"]
 }
 
-obj;
+obj.Fees[1]="35%";
 
-console.log(obj);
+console.log(obj.Fees);
 
