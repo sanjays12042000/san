@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Day1</title>
+</head>
+<body>
+
+<div id="root">
+    <!-- <h1 id="h1">welcome</h1>
+    <button id="button">Change</button> -->
+</div>
+
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<script>
+    
+//    document.getElementById("h1"); // Get the h1 element
+//    document.getElementById("button"); // Get the button element
+
+//    button.addEventListener("click",
+//    () => { // Add click event listener to the button
+//        h1.textContent = "Hello React "; // Change the text content of h1
+//    });
+
+//    const heading = document.createElement("h1"); // Create a new element
+//    heading.textContent = "Hello React"; // Set its text content
+
+//    document.getElementById("root"); // Get the root element
+//    root.appendChild(heading); // Append the new element to the root
+
+
+const headingReact = React.createElement("h1", null, "hi paps");   // Create a React element
+const root = ReactDOM.createRoot(document.getElementById("root")); // Get the root element
+root.render(headingReact);                                         // Render the React element to the root
+</script>
+
+</body>
+</html>
